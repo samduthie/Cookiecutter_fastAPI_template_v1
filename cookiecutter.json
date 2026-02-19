@@ -1,0 +1,10 @@
+{
+  "project_name": "FastAPI Scaffold",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_description": "A production-ready FastAPI boilerplate.",
+  "author_name": "Your Name",
+  "postgres_user": "postgres",
+  "postgres_password": "password",
+  "postgres_db": "app_db",
+  "app_port": "8000"
+}

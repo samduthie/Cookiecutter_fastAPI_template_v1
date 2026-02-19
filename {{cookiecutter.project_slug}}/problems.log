@@ -1,0 +1,8 @@
+Problem:
+Permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock
+
+Resolution:
+The ownership of the docker socket was incorrect. Changing the ownership to root:docker resolved the issue.
+
+Command:
+sudo chown root:docker /var/run/docker.sock
