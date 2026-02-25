@@ -9,7 +9,7 @@ from app.core.config import settings
 async_engine = create_async_engine(
     settings.database_uri_async,
     pool_pre_ping=True,
-    echo=False,  # Set to True to see SQL queries
+    echo=settings.DB_ECHO,
 )
 
 # Create a sessionmaker
@@ -22,7 +22,7 @@ AsyncSessionFactory = async_sessionmaker(
 # Redis connection pool
 redis_pool = redis.ConnectionPool.from_url(
     f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
-    max_connections=10,
+    max_connections=settings.REDIS_MAX_CONNECTIONS,
     encoding="utf-8",
     decode_responses=True,
 )
