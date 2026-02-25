@@ -33,5 +33,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: {% raw %}${{ steps.meta.outputs.tags }}  {% endraw %} 
+          labels: ${{ steps.meta.outputs.labels }}  {% endraw %} 
