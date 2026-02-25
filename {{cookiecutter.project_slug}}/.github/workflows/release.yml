@@ -47,8 +47,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           # Starts at v0.1 and increments based on GitHub run number
-          tag_name: v0.1.${{ github.run_number }}
-          name: Release v0.1.${{ github.run_number }}
+          tag_name: v0.1.{% raw %}${{ github.run_number }}{% endraw %}
+          name: Release v0.1.{% raw %}${{ github.run_number }}{% endraw %}
           body_path: release_notes.md
           draft: false
           prerelease: true  # Recommended for v0.x versions

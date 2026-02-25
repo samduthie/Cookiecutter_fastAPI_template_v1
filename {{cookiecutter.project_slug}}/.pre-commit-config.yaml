@@ -12,17 +12,9 @@ repos:
     hooks:
     -   id: gitleaks
 
--   repo: local
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.3.4
     hooks:
-    -   id: docker-ruff-lint
-        name: Docker Ruff Lint
-        entry: docker-compose exec -T api python -m ruff check . --no-cache --fix
-        language: system
-        pass_filenames: false
-        always_run: true
-    -   id: docker-pytest
-        name: Docker Pytest (Non-blocking)
-        entry: docker-compose exec -T api bash -c "pytest || true"
-        language: system
-        pass_filenames: false
-        verbose: true  # This ensures you actually see the test results in the terminal
+      - id: ruff
+        args: [ --fix ]

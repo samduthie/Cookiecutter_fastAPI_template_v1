@@ -24,6 +24,10 @@ This is the easiest way to get the application running.
 
     The API will be available at [http://localhost:8000](http://localhost:8000).
 
+    > **Note for Linux Users:** Docker mounts the current directory by default. Files created inside the container (like `__pycache__`) may be owned by `root`. To avoid permission issues, you can run the container with your user ID:
+    >
+    > `CURRENT_UID=$(id -u):$(id -g) docker-compose up -d --build`
+
 ## Makefile Commands
 
 A `Makefile` is provided to simplify common tasks.

@@ -1,8 +1,7 @@
 from typing import AsyncGenerator
 
 import redis.asyncio as redis
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
 
@@ -14,9 +13,8 @@ async_engine = create_async_engine(
 )
 
 # Create a sessionmaker
-AsyncSessionFactory = sessionmaker(
+AsyncSessionFactory = async_sessionmaker(
     bind=async_engine,
-    class_=AsyncSession,
     expire_on_commit=False,
     autoflush=False,
 )
