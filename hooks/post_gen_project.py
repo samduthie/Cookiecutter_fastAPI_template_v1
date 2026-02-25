@@ -9,8 +9,7 @@ project_slug = "{{ cookiecutter.project_slug }}"
 
 print(f"{GREEN}SUCCESS!{ENDC}")
 print(f"Project '{project_slug}' created successfully.")
-print("
----")
+print("---")
 print(f"{YELLOW}Next steps:{ENDC}")
 print(f"1. cd {project_slug}")
 print("2. (Optional) Create and populate your .env file for production secrets.")
