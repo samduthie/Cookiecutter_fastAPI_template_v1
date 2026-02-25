@@ -28,7 +28,7 @@ jobs:
       - name: Verify Boilerplate
         # We enter the generated folder and run our checks
         run: |
-          cd /tmp/my_fastapi_app
+          cd /tmp/fastapi_scaffold
           
           # 1. Check if essential files exist
           test -f main.py || exit 1
@@ -37,7 +37,4 @@ jobs:
           # 2. Try to run the Makefile commands (assuming they exist in your template)
           # We use --version or help checks to avoid starting a long-running server
           make --version
-          
-          # If you have a lint or setup command, run it here:
-          # make install
-          # make lint
+          make lint
