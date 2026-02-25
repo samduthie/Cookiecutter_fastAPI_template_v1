@@ -20,7 +20,7 @@ jobs:
       - name: Extract AI Summary
         id: get_summary
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: {% raw %}${{ github.token }} {% endraw %}
         run: |
           # 1. Identify the PR number associated with this merge commit
           PR_NUMBER=$(gh pr list --state merged --search "${{ github.sha }}" --json number --jq '.[0].number')
