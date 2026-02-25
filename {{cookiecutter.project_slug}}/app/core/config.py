@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "{{ cookiecutter.postgres_db }}"
     POSTGRES_HOST: str = "db"
     POSTGRES_PORT: int = 5432
+    DB_ECHO: bool = False
 
     @property
     def database_uri_async(self) -> str:
@@ -26,6 +27,7 @@ class Settings(BaseSettings):
     # Redis
     REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
+    REDIS_MAX_CONNECTIONS: int = 10
 
 
 settings = Settings()
