@@ -31,8 +31,8 @@ jobs:
           cd /tmp/fastapi_scaffold
           
           # 1. Check if essential files exist
-          # test -f main.py || exit 1
-          # test -f Makefile || exit 1
+          test -f main.py || exit 1
+          test -f Makefile || exit 1
           
           # # 2. Try to run the Makefile commands (assuming they exist in your template)
           # # We use --version or help checks to avoid starting a long-running server
