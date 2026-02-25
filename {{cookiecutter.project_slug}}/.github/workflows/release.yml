@@ -1,0 +1,54 @@
+name: Automated Release
+
+on:
+  push:
+    branches:
+      - main  # Triggered when code is merged into main
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # Required to create tags and releases
+      pull-requests: read    # Required to fetch the CodeRabbit PR summary
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract AI Summary
+        id: get_summary
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # 1. Identify the PR number associated with this merge commit
+          PR_NUMBER=$(gh pr list --state merged --search "${{ github.sha }}" --json number --jq '.[0].number')
+
+          # 2. Handle case where no PR is found (direct push to main)
+          if [ -z "$PR_NUMBER" ]; then
+            echo "No merged PR found for this commit. Using commit message as release notes."
+            git log -1 --pretty=%B > release_notes.md
+            exit 0
+          fi
+
+          # 3. Extract the body (where CodeRabbit posts its high-level summary)
+          SUMMARY=$(gh pr view "$PR_NUMBER" --json body --jq '.body // empty')
+
+          # 4. Handle empty PR body
+          if [ -z "$SUMMARY" ]; then
+            echo "PR body is empty. Using PR title as release notes."
+            gh pr view "$PR_NUMBER" --json title --jq '.title' > release_notes.md
+          else
+            echo "$SUMMARY" > release_notes.md
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # Starts at v0.1 and increments based on GitHub run number
+          tag_name: v0.1.${{ github.run_number }}
+          name: Release v0.1.${{ github.run_number }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: true  # Recommended for v0.x versions

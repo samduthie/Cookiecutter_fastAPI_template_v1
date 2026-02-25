@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  lint:
+    name: Lint & Ruff Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - name: Run Ruff
+        run: ruff check .
+
+  test:
+    name: Run Pytest
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Dummy .env
+        run: touch .env
+
+      - name: Build Test Stack
+        run: docker-compose build
+
+      - name: Run Tests
+        run: |
+          docker-compose up -d --wait
+          docker-compose run --rm api sh -c "cd /app && pytest --cov=app --cov-report=xml"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.0.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: ${{ github.repository }}
+
+      - name: Teardown
+        if: always()
+        run: docker-compose down -v

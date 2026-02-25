@@ -6,6 +6,7 @@ __pycache__/
 # Environment variables
 .env
 .venv
+env.test
 venv/
 
 # Testing & Quality
@@ -16,3 +17,11 @@ venv/
 # IDEs
 .vscode/
 .idea/
+
+# Logging files
+*.log
+gunicorn.log
+
+# Pytest coverage
+*.coverage
+coverage.xml

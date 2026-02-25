@@ -1,0 +1,28 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+    -   id: check-yaml
+    -   id: check-added-large-files
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+
+-   repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0
+    hooks:
+    -   id: gitleaks
+
+-   repo: local
+    hooks:
+    -   id: docker-ruff-lint
+        name: Docker Ruff Lint
+        entry: docker-compose exec -T api python -m ruff check . --no-cache --fix
+        language: system
+        pass_filenames: false
+        always_run: true
+    -   id: docker-pytest
+        name: Docker Pytest (Non-blocking)
+        entry: docker-compose exec -T api bash -c "pytest || true"
+        language: system
+        pass_filenames: false
+        verbose: true  # This ensures you actually see the test results in the terminal
