@@ -23,7 +23,7 @@ jobs:
           GH_TOKEN: {% raw %}${{ github.token }} {% endraw %}
         run: |
           # 1. Identify the PR number associated with this merge commit
-          PR_NUMBER=$(gh pr list --state merged --search "${{ github.sha }}" --json number --jq '.[0].number')
+          PR_NUMBER=$(gh pr list --state merged --search "{% raw %}${{ github.sha }} {% endraw %}" --json number --jq '.[0].number')
 
           # 2. Handle case where no PR is found (direct push to main)
           if [ -z "$PR_NUMBER" ]; then
