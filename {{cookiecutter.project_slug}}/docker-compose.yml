@@ -1,12 +1,12 @@
-version: '3.8'
-
 services:
   api:
     build: .
+    container_name: {{ cookiecutter.project_name }}
     ports:
-      - "{{ cookiecutter.app_port }}:8000"
+      - "8000:8000"
     volumes:
       - .:/app
+      - /app/.venv
     env_file:
       - .env
     depends_on:
@@ -14,7 +14,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    entrypoint: ["/app/entrypoint.sh"]
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
   db:
@@ -24,9 +23,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_USER: "{{ cookiecutter.postgres_user }}"
-      POSTGRES_PASSWORD: "{{ cookiecutter.postgres_password }}"
-      POSTGRES_DB: "{{ cookiecutter.postgres_db }}"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "app_db"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s

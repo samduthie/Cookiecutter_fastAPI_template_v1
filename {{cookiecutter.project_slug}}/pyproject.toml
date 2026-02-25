@@ -1,7 +1,8 @@
 [project]
-name = "{{ cookiecutter.project_slug }}"
+name = "quoteapi"
 version = "0.1.0"
-description = "{{ cookiecutter.project_description }}"
+description = "Secure Quote API"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi",
     "uvicorn[standard]",
@@ -10,10 +11,15 @@ dependencies = [
     "redis",
     "pydantic-settings",
     "alembic",
-    "ruff",
     "python-json-logger",
     "pytest",
     "httpx",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "black",
 ]
 
 [tool.ruff]
